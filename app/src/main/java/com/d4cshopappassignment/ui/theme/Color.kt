@@ -1,4 +1,4 @@
-package com.checkmycharger.shopappassignment.ui.theme
+package com.d4cshopappassignment.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

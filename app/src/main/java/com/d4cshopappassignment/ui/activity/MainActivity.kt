@@ -1,4 +1,4 @@
-package com.checkmycharger.shopappassignment.ui.activity
+package com.d4cshopappassignment.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.checkmycharger.shopappassignment.ui.activity.shopHome.HomeActivity
-import com.checkmycharger.shopappassignment.ui.theme.ShopAppAssignmentTheme
+import com.d4cshopappassignment.ui.activity.shopHome.HomeActivity
+import com.d4cshopappassignment.ui.theme.ShopAppAssignmentTheme
 import java.util.logging.Logger
 
 class MainActivity : ComponentActivity() {
