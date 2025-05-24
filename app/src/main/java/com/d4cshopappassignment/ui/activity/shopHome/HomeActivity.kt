@@ -36,11 +36,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.checkmycharger.shopappassignment.R
+import com.d4cshopappassignment.data.Product
 import com.d4cshopappassignment.data.PromoCard
 import com.d4cshopappassignment.data.promoCards
 import com.d4cshopappassignment.data.sampleCategories
+import com.d4cshopappassignment.data.sampleProducts
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -63,6 +66,7 @@ class HomeActivity : ComponentActivity() {
                     ShopTopBar()
                     PromoCardBanner(cards = promoCards)
                     CategoriesSection(categories = sampleCategories)
+                    NewProductSection(products = sampleProducts)
                 }
             }
         }
@@ -263,6 +267,149 @@ fun PromoCardItem(card: PromoCard) {
         }
     }
 }
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun NewProductSection(products: List<Product>) {
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("New Products", style = MaterialTheme.typography.titleMedium, color = Color.White)
+            Text("See All", color = Color(0xFFBB86FC), modifier = Modifier.clickable { })
+        }
+
+        // ViewPager
+        val pagerState = rememberPagerState()
+        HorizontalPager(
+            count = products.size,
+            state = pagerState,
+            modifier = Modifier.weight(1f)
+        ) { page ->
+            ProductCard(product = products[page])
+        }
+    }
+}
+
+@Composable
+fun ProductCard(product: Product) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.grey_card_svg),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.matchParentSize()
+        )
+
+        Icon(
+            painter = painterResource(id = R.drawable.ic_favorite),
+            contentDescription = "Favorite",
+            tint = Color.White,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(16.dp)
+        )
+
+        // Product Image
+        Image(
+            painter = painterResource(id = product.imageRes),
+            contentDescription = product.title,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .size(200.dp) // adjust as needed
+        )
+
+        if (product.isBestSeller) {
+            Text(
+                text = "Best Seller",
+                color = Color.Black,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .background(Color.Green, shape = RoundedCornerShape(8.dp))
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(top = 16.dp, end = 16.dp)
+            )
+        }
+
+        Icon(
+            painter = painterResource(id = R.drawable.item_cart),
+            contentDescription = "Icon",
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+        )
+
+
+        ProductDetailsOverlay(product = product)
+    }
+}
+
+@Composable
+fun ProductDetailsOverlay(product: Product) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xCC000000))
+            .padding(16.dp)
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(product.title, color = Color(0xFF4CAF50), style = MaterialTheme.typography.titleMedium)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                val stockColor = if (product.inStock) Color(0xFF4CAF50) else Color.Red
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .background(stockColor, shape = CircleShape)
+                )
+                Text(
+                    text = if (product.inStock) " In Stock" else " Out of Stock",
+                    color = stockColor,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+            }
+        }
+
+        Text(product.description, color = Color.White, style = MaterialTheme.typography.bodySmall)
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(product.price, color = Color.White, style = MaterialTheme.typography.bodyMedium)
+            Text(
+                text = " ${product.originalPrice}",
+                style = MaterialTheme.typography.bodySmall.copy(textDecoration = TextDecoration.LineThrough),
+                color = Color.Gray
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            repeat(5) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_rate_star),
+                    contentDescription = "Star",
+                    tint = Color.Yellow,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+            Text("${product.reviewsCount} reviews", color = Color.White, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(start = 8.dp))
+        }
+    }
+}
+
+
+
 
 
 
