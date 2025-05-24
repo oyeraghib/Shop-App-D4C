@@ -5,7 +5,7 @@ import com.checkmycharger.shopappassignment.R
 data class Product(
     val title: String,
     val description: String,
-    val secondDescription: String = "",
+    val secondDescription: String = "Checking",
     val price: String,
     val originalPrice: String,
     val imageRes: Int,

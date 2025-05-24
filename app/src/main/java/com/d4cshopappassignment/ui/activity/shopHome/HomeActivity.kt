@@ -38,8 +38,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.checkmycharger.shopappassignment.R
 import com.d4cshopappassignment.data.Product
 import com.d4cshopappassignment.data.PromoCard
@@ -49,10 +53,6 @@ import com.d4cshopappassignment.data.sampleProducts
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -156,7 +156,7 @@ fun CategoriesSection(
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(top = 8.dp, bottom = 8.dp)
+            .padding(top = 8.dp)
     ) {
         Row(
             modifier = Modifier
@@ -313,16 +313,21 @@ fun NewProductsHeader() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text("New Products", style = MaterialTheme.typography.titleMedium, color = Color.White)
-        Text("See All", color = Color(0xFFBB86FC), modifier = Modifier.clickable { })
+        Text("New Products", style = MaterialTheme.typography.titleMedium, color = Color.White,
+            fontSize = 22.sp,
+            fontFamily = FontFamily(Font(R.font.century_old_style_std_bold)))
+        Text("See All", modifier = Modifier.clickable { },
+            fontFamily = FontFamily(Font(R.font.neuzeit_sltstd_book)),
+            style = MaterialTheme.typography.bodyMedium.copy(
+                textDecoration = TextDecoration.Underline,
+                color = Color.White
+            ),)
     }
 }
-
-
 
 @Composable
 fun ProductCard(product: Product) {
@@ -334,7 +339,7 @@ fun ProductCard(product: Product) {
     ) {
         // Background PNG
         Image(
-            painter = painterResource(id = R.drawable.product_title_card),
+            painter = painterResource(id = R.drawable.product_bg_card),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -401,7 +406,8 @@ fun ProductDetailsOverlay(product: Product) {
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(product.title, color = Color(0xFF4CAF50), style = MaterialTheme.typography.titleMedium)
+            Text(product.title, color = Color(0xFF4CAF50), style = MaterialTheme.typography.titleMedium,
+                fontSize = 22.sp, fontFamily = FontFamily(Font(R.font.century_old_style_std_bold)))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 val stockColor = if (product.inStock) Color(0xFF4CAF50) else Color.Red
                 Box(
@@ -418,14 +424,34 @@ fun ProductDetailsOverlay(product: Product) {
             }
         }
 
-        Text(product.description, color = Color.White, style = MaterialTheme.typography.bodySmall)
+        Text(
+            text = product.description,
+            color = Color.White,
+            fontSize = 12.sp,
+            fontFamily = FontFamily(Font(R.font.neuzeit_sltstd_book)),
+            fontWeight = FontWeight.Normal,
+            modifier = Modifier.padding(top = 8.dp)
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        )
+
+        Text(
+            text = product.secondDescription,
+            color = Color.White,
+            fontSize = 14.sp,
+            fontFamily = FontFamily(Font(R.font.neuzeit_sltstd_book)),
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 8.dp)
+        )
+
+        Row(verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(top = 12.dp)
+        ) {
+
             Text(product.price, color = Color.White, style = MaterialTheme.typography.bodyMedium)
             Text(
                 text = " ${product.originalPrice}",
                 style = MaterialTheme.typography.bodySmall.copy(textDecoration = TextDecoration.LineThrough),
-                color = Color.Gray
+                color = Color.Gray,
             )
         }
 
