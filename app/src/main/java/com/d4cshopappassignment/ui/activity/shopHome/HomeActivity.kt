@@ -7,9 +7,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +22,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -29,10 +33,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.checkmycharger.shopappassignment.R
+import com.d4cshopappassignment.data.PromoCard
+import com.d4cshopappassignment.data.promoCards
 import com.d4cshopappassignment.data.sampleCategories
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +60,7 @@ class HomeActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Top
                 ) {
                     ShopTopBar()
+                    PromoCardBanner(cards = promoCards)
                     CategoriesSection(categories = sampleCategories)
                 }
             }
@@ -167,4 +178,89 @@ fun CategoryItem(category: com.d4cshopappassignment.data.Category) {
         )
     }
 }
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun PromoCardBanner(
+    cards: List<PromoCard>,
+    modifier: Modifier = Modifier
+) {
+    val pagerState = rememberPagerState()
+
+    Column(modifier = modifier) {
+        HorizontalPager(
+            count = cards.size,
+            state = pagerState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1.6f)
+        ) { page ->
+            PromoCardItem(card = cards[page])
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Dot Indicator
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            repeat(cards.size) { index ->
+                val color = if (pagerState.currentPage == index) Color.Green else Color.Black
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .padding(4.dp)
+                        .background(color, shape = CircleShape)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun PromoCardItem(card: PromoCard) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.shopflowcard1),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.matchParentSize()
+        )
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(24.dp)
+        ) {
+            Text(
+                text = card.title,
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.White
+            )
+            Text(
+                text = card.subtitle,
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.White,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+            Button(
+                onClick = { /* TODO */ },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Green,
+                    contentColor = Color.Black
+                ),
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Text(text = card.buttonText)
+            }
+        }
+    }
+}
+
+
 
