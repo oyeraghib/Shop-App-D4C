@@ -49,6 +49,9 @@ import com.d4cshopappassignment.data.sampleProducts
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.sp
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,7 +117,9 @@ fun ShopTopBar() {
         Text(
             text = "Shop",
             style = MaterialTheme.typography.titleLarge,
-            color = Color.White
+            color = Color.White,
+            fontSize = 24.sp,
+            fontFamily = FontFamily(Font(R.font.century_old_style_std_bold))
         )
 
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -150,23 +155,28 @@ fun CategoriesSection(
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
+            .padding(top = 32.dp, bottom = 16.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Categories",
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.White
+                color = Color.White,
+                fontSize = 22.sp,
+                fontFamily = FontFamily(Font(R.font.century_old_style_std_bold))
             )
             Text(
                 text = "See All",
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFFBB86FC),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textDecoration = TextDecoration.Underline,
+                    color = Color.White
+                ),
                 modifier = Modifier.clickable { onSeeAllClicked() }
             )
         }
