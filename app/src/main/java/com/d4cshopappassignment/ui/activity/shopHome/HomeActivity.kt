@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -392,14 +393,22 @@ fun ProductCard(product: Product) {
                 .fillMaxWidth()
         )
 
-        // Bottom-right decorative icon (inside PNG cutout)
-        Icon(
-            painter = painterResource(id = R.drawable.ic_cart),
-            contentDescription = "Bottom icon",
+        Box(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp)
-        )
+                .padding(end = 24.dp, bottom = 24.dp)
+                .background(Color.White, shape = CircleShape)
+                .size(56.dp) // Outer circle size
+                .clip(CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.item_cart),
+                contentDescription = "Bottom icon",
+                modifier = Modifier.size(28.dp),
+                tint = Color.Unspecified
+            )
+        }
     }
 }
 
