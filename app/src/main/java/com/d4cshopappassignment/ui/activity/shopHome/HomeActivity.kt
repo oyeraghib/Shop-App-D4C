@@ -367,7 +367,7 @@ fun ProductCard(product: Product) {
             contentDescription = product.title,
             modifier = Modifier
                 .align(Alignment.Center)
-                .fillMaxWidth(0.6f)
+                .padding(bottom = 128.dp)
                 .aspectRatio(1f)
         )
 
