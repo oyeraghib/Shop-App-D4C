@@ -57,14 +57,12 @@ class HomeActivity : ComponentActivity() {
             Surface(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Black)
                     .statusBarsPadding(),
-                color = Color(0xFF121212)
+                color = Color(0xFF2C2C2C)
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black)
                 ) {
                     // Fixed Top Bar
                     ShopTopBar()
