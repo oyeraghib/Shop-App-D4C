@@ -16,10 +16,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -61,13 +59,13 @@ class HomeActivity : ComponentActivity() {
         setContent {
             Surface(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .statusBarsPadding(),
+                    .fillMaxSize(),
                 color = Color(0xFF2C2C2C)
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .padding(top = 42.dp)
                 ) {
                     // Fixed Top Bar
                     ShopTopBar()
@@ -202,14 +200,21 @@ fun CategoryItem(category: com.d4cshopappassignment.data.Category) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.width(72.dp)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.categorysample),
-            contentDescription = category.name,
+        Box(
             modifier = Modifier
-                .size(56.dp)
+                .size(64.dp)
                 .clip(CircleShape)
-                .background(Color.White)
-        )
+                .background(Color.Black),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.categorysample),
+                contentDescription = category.name,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+            )
+        }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = category.name,
