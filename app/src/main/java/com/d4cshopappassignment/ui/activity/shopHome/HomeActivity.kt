@@ -203,7 +203,7 @@ fun PromoCardBanner(
         Row(
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(start = 72.dp, bottom = 16.dp),
+                .padding(start = 72.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             repeat(cards.size) { index ->
