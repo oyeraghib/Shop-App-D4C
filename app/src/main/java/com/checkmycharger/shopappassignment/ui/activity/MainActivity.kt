@@ -1,4 +1,4 @@
-package com.checkmycharger.shopappassignment
+package com.checkmycharger.shopappassignment.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
