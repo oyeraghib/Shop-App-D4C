@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -187,7 +188,7 @@ fun PromoCardBanner(
 ) {
     val pagerState = rememberPagerState()
 
-    Column(modifier = modifier) {
+    Box(modifier = modifier) {
         HorizontalPager(
             count = cards.size,
             state = pagerState,
@@ -198,20 +199,21 @@ fun PromoCardBanner(
             PromoCardItem(card = cards[page])
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Dot Indicator
+        // Dot Indicators
         Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(start = 72.dp, bottom = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             repeat(cards.size) { index ->
-                val color = if (pagerState.currentPage == index) Color.Green else Color.Black
                 Box(
                     modifier = Modifier
-                        .size(8.dp)
-                        .padding(4.dp)
-                        .background(color, shape = CircleShape)
+                        .size(width = 24.dp, height = 6.dp)
+                        .background(
+                            if (pagerState.currentPage == index) Color.Green else Color.Black,
+                            shape = RoundedCornerShape(3.dp)
+                        )
                 )
             }
         }
