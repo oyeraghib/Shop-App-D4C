@@ -156,6 +156,7 @@ fun CategoryItem(category: com.d4cshopappassignment.data.Category) {
             modifier = Modifier
                 .size(56.dp)
                 .clip(CircleShape)
+                .background(Color.White)
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
