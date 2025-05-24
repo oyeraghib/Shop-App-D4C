@@ -410,8 +410,8 @@ fun ProductDetailsOverlay(product: Product, modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(200.dp)
+            .padding(24.dp)
     ) {
-        // Background Image with some transparency or dim effect
         Image(
             painter = painterResource(id = R.drawable.product_title_card),
             contentDescription = null,
