@@ -345,15 +345,20 @@ fun ProductCard(product: Product) {
             modifier = Modifier.fillMaxSize()
         )
 
-        // Top-left Favorite Icon
-        Icon(
-            painter = painterResource(id = R.drawable.ic_favorite),
-            contentDescription = "Favorite",
-            tint = Color.White,
+        Box(
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(16.dp)
-        )
+                .padding(start = 8.dp, bottom = 8.dp)
+                .background(Color.Black, shape = CircleShape)
+                .padding(8.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_favorite),
+                contentDescription = "Favorite",
+                tint = Color.White,
+                modifier = Modifier.size(20.dp)
+            )
+        }
 
         // Product Image
         Image(
