@@ -371,19 +371,20 @@ fun ProductCard(product: Product) {
                 .aspectRatio(1f)
         )
 
-        // Optional Best Seller badge
+        // Best Seller badge
         if (product.isBestSeller) {
             Text(
                 text = "Best Seller",
-                color = Color.Black,
+                color = Color(0xFFC8E6C9),
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .background(Color.Green, shape = RoundedCornerShape(8.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-                    .padding(end = 16.dp)
+                    .align(Alignment.TopEnd)
+                    .padding(top = 24.dp, end = 12.dp)
+                    .background(Color.Black, shape = RoundedCornerShape(12.dp))
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
             )
         }
+
 
         // Bottom Overlay with Product Details
         ProductDetailsOverlay(
