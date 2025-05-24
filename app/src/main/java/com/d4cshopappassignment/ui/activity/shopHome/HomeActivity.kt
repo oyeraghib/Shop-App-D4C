@@ -380,7 +380,12 @@ fun ProductCard(product: Product) {
         }
 
         // Bottom Overlay with Product Details
-        ProductDetailsOverlay(product)
+        ProductDetailsOverlay(
+            product = product,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .fillMaxWidth()
+        )
 
         // Bottom-right decorative icon (inside PNG cutout)
         Icon(
@@ -395,9 +400,9 @@ fun ProductCard(product: Product) {
 
 
 @Composable
-fun ProductDetailsOverlay(product: Product) {
+fun ProductDetailsOverlay(product: Product, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(Color(0xCC000000))
             .padding(16.dp)
