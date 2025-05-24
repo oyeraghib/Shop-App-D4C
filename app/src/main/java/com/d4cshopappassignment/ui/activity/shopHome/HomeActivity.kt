@@ -394,7 +394,7 @@ fun ProductCard(product: Product) {
 
         // Bottom-right decorative icon (inside PNG cutout)
         Icon(
-            painter = painterResource(id = R.drawable.item_cart),
+            painter = painterResource(id = R.drawable.ic_cart),
             contentDescription = "Bottom icon",
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -406,77 +406,91 @@ fun ProductCard(product: Product) {
 
 @Composable
 fun ProductDetailsOverlay(product: Product, modifier: Modifier = Modifier) {
-    Column(
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color(0xCC000000))
-            .padding(16.dp)
+            .height(200.dp)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+        // Background Image with some transparency or dim effect
+        Image(
+            painter = painterResource(id = R.drawable.product_title_card),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+        )
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
-            Text(product.title, color = Color(0xFF4CAF50), style = MaterialTheme.typography.titleMedium,
-                fontSize = 22.sp, fontFamily = FontFamily(Font(R.font.century_old_style_std_bold)))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                val stockColor = if (product.inStock) Color(0xFF4CAF50) else Color.Red
-                Box(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .background(stockColor, shape = CircleShape)
-                )
-                Text(
-                    text = if (product.inStock) " In Stock" else " Out of Stock",
-                    color = stockColor,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(start = 4.dp)
-                )
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(product.title, color = Color(0xFF4CAF50), style = MaterialTheme.typography.titleMedium,
+                    fontSize = 22.sp, fontFamily = FontFamily(Font(R.font.century_old_style_std_bold)))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    val stockColor = if (product.inStock) Color(0xFF4CAF50) else Color.Red
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .background(stockColor, shape = CircleShape)
+                    )
+                    Text(
+                        text = if (product.inStock) " In Stock" else " Out of Stock",
+                        color = stockColor,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                }
             }
-        }
 
-        Text(
-            text = product.description,
-            color = Color.White,
-            fontSize = 12.sp,
-            fontFamily = FontFamily(Font(R.font.neuzeit_sltstd_book)),
-            fontWeight = FontWeight.Normal,
-            modifier = Modifier.padding(top = 8.dp)
-
-        )
-
-        Text(
-            text = product.secondDescription,
-            color = Color.White,
-            fontSize = 14.sp,
-            fontFamily = FontFamily(Font(R.font.neuzeit_sltstd_book)),
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-
-        Row(verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(top = 12.dp)
-        ) {
-
-            Text(product.price, color = Color.White, style = MaterialTheme.typography.bodyMedium)
             Text(
-                text = " ${product.originalPrice}",
-                style = MaterialTheme.typography.bodySmall.copy(textDecoration = TextDecoration.LineThrough),
-                color = Color.Gray,
-            )
-        }
+                text = product.description,
+                color = Color.White,
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(R.font.neuzeit_sltstd_book)),
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.padding(top = 8.dp)
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            repeat(5) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_rate_star),
-                    contentDescription = "Star",
-                    tint = Color.Yellow,
-                    modifier = Modifier.size(16.dp)
+            )
+
+            Text(
+                text = product.secondDescription,
+                color = Color.White,
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.neuzeit_sltstd_book)),
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+
+            Row(verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 12.dp)
+            ) {
+
+                Text(product.price, color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = " ${product.originalPrice}",
+                    style = MaterialTheme.typography.bodySmall.copy(textDecoration = TextDecoration.LineThrough),
+                    color = Color.Gray,
                 )
             }
-            Text("${product.reviewsCount} reviews", color = Color.White, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(start = 8.dp))
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                repeat(5) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_rate_star),
+                        contentDescription = "Star",
+                        tint = Color.Yellow,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+                Text("${product.reviewsCount} reviews", color = Color.White, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(start = 8.dp))
+            }
         }
     }
+
 }
 
 
