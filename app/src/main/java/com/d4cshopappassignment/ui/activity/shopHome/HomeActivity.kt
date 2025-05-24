@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -57,16 +59,40 @@ class HomeActivity : ComponentActivity() {
                     .fillMaxSize()
                     .background(Color.Black)
                     .statusBarsPadding(),
-                color = Color.Black
+                color = Color(0xFF121212)
             ) {
                 Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Top
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black)
                 ) {
+                    // Fixed Top Bar
                     ShopTopBar()
-                    PromoCardBanner(cards = promoCards)
-                    CategoriesSection(categories = sampleCategories)
-                    NewProductSection(products = sampleProducts)
+
+                    // Scrollable Content
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 16.dp),
+                        contentPadding = PaddingValues(bottom = 100.dp),
+                        verticalArrangement = Arrangement.spacedBy(24.dp)
+                    ) {
+                        item {
+                            CategoriesSection(categories = sampleCategories)
+                        }
+
+                        item {
+                            PromoCardBanner(promoCards)
+                        }
+
+                        item {
+                            NewProductsHeader()
+                        }
+
+                        items (sampleProducts) { prod ->
+                            ProductCard(prod)
+                        }
+                    }
                 }
             }
         }
@@ -268,48 +294,39 @@ fun PromoCardItem(card: PromoCard) {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun NewProductSection(products: List<Product>) {
-    Column(modifier = Modifier.fillMaxSize()) {
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("New Products", style = MaterialTheme.typography.titleMedium, color = Color.White)
-            Text("See All", color = Color(0xFFBB86FC), modifier = Modifier.clickable { })
-        }
-
-        // ViewPager
-        val pagerState = rememberPagerState()
-        HorizontalPager(
-            count = products.size,
-            state = pagerState,
-            modifier = Modifier.weight(1f)
-        ) { page ->
-            ProductCard(product = products[page])
-        }
+fun NewProductsHeader() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("New Products", style = MaterialTheme.typography.titleMedium, color = Color.White)
+        Text("See All", color = Color(0xFFBB86FC), modifier = Modifier.clickable { })
     }
 }
+
+
 
 @Composable
 fun ProductCard(product: Product) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+            .fillMaxWidth()
+            .height(500.dp)
+            .padding(horizontal = 16.dp)
     ) {
+        // Background PNG
         Image(
-            painter = painterResource(id = R.drawable.grey_card_svg),
+            painter = painterResource(id = R.drawable.product_title_card),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.matchParentSize()
+            modifier = Modifier.fillMaxSize()
         )
 
+        // Top-left Favorite Icon
         Icon(
             painter = painterResource(id = R.drawable.ic_favorite),
             contentDescription = "Favorite",
@@ -325,34 +342,38 @@ fun ProductCard(product: Product) {
             contentDescription = product.title,
             modifier = Modifier
                 .align(Alignment.Center)
-                .size(200.dp) // adjust as needed
+                .fillMaxWidth(0.6f)
+                .aspectRatio(1f)
         )
 
+        // Optional Best Seller badge
         if (product.isBestSeller) {
             Text(
                 text = "Best Seller",
                 color = Color.Black,
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier
-                    .align(Alignment.TopEnd)
+                    .align(Alignment.CenterEnd)
                     .background(Color.Green, shape = RoundedCornerShape(8.dp))
                     .padding(horizontal = 8.dp, vertical = 4.dp)
-                    .padding(top = 16.dp, end = 16.dp)
+                    .padding(end = 16.dp)
             )
         }
 
+        // Bottom Overlay with Product Details
+        ProductDetailsOverlay(product)
+
+        // Bottom-right decorative icon (inside PNG cutout)
         Icon(
             painter = painterResource(id = R.drawable.item_cart),
-            contentDescription = "Icon",
+            contentDescription = "Bottom icon",
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
         )
-
-
-        ProductDetailsOverlay(product = product)
     }
 }
+
 
 @Composable
 fun ProductDetailsOverlay(product: Product) {
