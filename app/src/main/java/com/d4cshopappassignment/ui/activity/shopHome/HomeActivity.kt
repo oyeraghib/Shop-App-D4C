@@ -51,6 +51,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 class HomeActivity : ComponentActivity() {
@@ -79,11 +80,11 @@ class HomeActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.spacedBy(24.dp)
                     ) {
                         item {
-                            CategoriesSection(categories = sampleCategories)
+                            PromoCardBanner(promoCards)
                         }
 
                         item {
-                            PromoCardBanner(promoCards)
+                            CategoriesSection(categories = sampleCategories)
                         }
 
                         item {
@@ -226,7 +227,9 @@ fun PromoCardBanner(
 ) {
     val pagerState = rememberPagerState()
 
-    Box(modifier = modifier) {
+    Box(modifier = Modifier
+        .padding(top = 16.dp)
+    ) {
         HorizontalPager(
             count = cards.size,
             state = pagerState,
@@ -274,12 +277,14 @@ fun PromoCardItem(card: PromoCard) {
 
         Column(
             modifier = Modifier
-                .align(Alignment.Center)
-                .padding(24.dp)
+                .padding(36.dp),
+            horizontalAlignment = Alignment.Start
         ) {
             Text(
                 text = card.title,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineMedium.copy(fontFamily = FontFamily(Font(R.font.neuzeit_sltstd_book)),
+                    fontWeight = FontWeight.Bold
+                ),
                 color = Color.White
             )
             Text(
