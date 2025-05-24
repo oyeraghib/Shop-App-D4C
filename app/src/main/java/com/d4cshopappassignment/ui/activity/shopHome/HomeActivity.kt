@@ -156,12 +156,12 @@ fun CategoriesSection(
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(top = 32.dp, bottom = 16.dp)
+            .padding(top = 8.dp, bottom = 8.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -214,7 +214,8 @@ fun CategoryItem(category: com.d4cshopappassignment.data.Category) {
             text = category.name,
             style = MaterialTheme.typography.bodyMedium,
             color = Color.White,
-            maxLines = 1
+            maxLines = 1,
+            fontFamily = FontFamily(Font(R.font.neuzeit_sltstd_book))
         )
     }
 }
